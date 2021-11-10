@@ -1,0 +1,124 @@
+{% extends 'adm/base.html' %}
+{% load static %}
+{% block content %}
+<div class="pd-ltr-20 xs-pd-20-10">
+	<div class="min-height-200px">
+		<div class="card-box mb-30">
+			<div class="pd-20">
+				<h4 class="text-blue h4">Order List</h4>
+
+				
+
+
+
+			</div>
+			<div class="pb-20">
+				<table class="table nowrap">
+					<thead>
+						<tr>
+							<th class="table-plus datatable-nosort">No.</th>
+							<th>Order Id</th>
+							<th>User</th>
+							<th>Product Name</th>
+							<th>Brand</th>
+							<th>Quantity</th>
+							<th>Status</th>
+							<th>Date</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for order_prodect in order_prodects %}
+							{% if order_prodect.status != 'Deliverd' and order_prodect.status != 'Cancelled' and order_prodect.status != 'Return' %}
+								<tr>
+									<td class="table-plus">{{ forloop.counter }}</td>
+									<td>{{order_prodect.order.order_number}}</td>
+									<td>{{order_prodect.user.username}}</td>
+									<td>{{order_prodect.prodect.prodectname}}</td>
+									<td>{{order_prodect.prodect.brand}}</td>
+									<td>{{order_prodect.quantity}}</td>
+									<td>
+									<div class="row">
+										<select name="status" onchange="order_status(event,'{{order_prodect.id}}')" id="" style=" border-radius: 2rem;border-width: 2px; border-color: rgb(173, 173, 173);">
+											<option value="{{order_prodect.status}}" selected>{{order_prodect.status}}</option>
+											{% if order_prodect.status != 'Placed' and order_prodect.status != 'Shipping' %}
+											<option value="Placed" style="color: rgb(0, 110, 255);">Placed</option>
+											{% endif %}
+											{% if order_prodect.status != 'Shipping' %}
+											<option value="Shipping" style="color: rgb(255, 196, 0);">Shipping</option>
+											{% endif %}
+											{% if order_prodect.status != 'Deliverd' %}
+											<option value="Deliverd" style="color: rgb(9, 255, 0);">Deliverd</option>
+											{% endif %}
+											{% if order_prodect.status != 'Cancelled' and order_prodect.status != 'Shipping' %}
+											<option value="Cancelled" style="color: red;">Cancelled</option>
+											{% endif %}
+										</select>
+									</div>
+								</td>
+									<td>{{order_prodect.created_at}}</td>
+									<td class="table-plus">
+										<div class="name-avatar d-flex align-items-center">
+											<div class="avatar mr-2 flex-shrink-0">
+												<img src="{{ order_prodect.prodect.img1.url }}" class="border-radius-100 shadow"
+													width="65px" height="65px" alt="">
+											</div>
+										</div>
+									</td>
+								</tr>
+							{% endif %}
+						{% endfor %}
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<!-- Export Datatable End -->
+	</div>
+</div>
+
+</div>
+<!-- js -->
+<script src="{% static 'adm/vendors/scripts/core.js' %}"></script>
+<script src="{% static 'adm/vendors/scripts/script.min.js' %}"></script>
+<script src="{% static 'adm/vendors/scripts/process.js' %}"></script>
+<script src="{% static 'adm/vendors/scripts/layout-settings.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/responsive.bootstrap4.min.js' %}"></script>
+<!-- buttons for Export datatable -->
+<script src="{% static 'adm/src/plugins/datatables/js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/buttons.print.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/buttons.html5.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/buttons.flash.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/pdfmake.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/vfs_fonts.js' %}"></script>
+<!-- Datatable Setting js -->
+<script src="{% static 'adm/vendors/scripts/datatable-setting.js' %}"></script>
+
+<script>
+    function order_status(event, id){
+        status = event.target.value
+        id = id
+        console.log(status, id)
+        $.ajax({
+            url: '/panel/order_ststus',
+            method: 'POST',
+            dataType: 'json',
+            data: {
+                id: id,
+                status: status,
+                csrfmiddlewaretoken: "{{csrf_token}}"
+            },
+            success: (response) => {
+                location.reload()
+            }
+        })
+    }
+</script>
+</body>
+
+</html>
+{% endblock %}

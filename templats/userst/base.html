@@ -1,0 +1,250 @@
+<style>
+	/* Dropdown Content (Hidden by Default) */
+	.dropdown-content1 {
+		display: none;
+		position: absolute;
+		background-color: black;
+		min-width: 30%;
+		z-index: 1;
+	}
+
+	/* Links inside the dropdown */
+	.dropdown-content1 a {
+		background-color: rgb(0, 0, 0);
+		color: rgb(252, 252, 252);
+		padding: 3%;
+		display: block;
+	}
+
+	/* Change color of dropdown links on hover */
+	.dropdown-content1 a:hover1 {
+		background-color: #ffffff
+	}
+
+	/* Show the dropdown menu on hover */
+	.dropdown1:hover .dropdown-content1 {
+		background-color: white;
+		display: block;
+	}
+</style>
+
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Triple HASH</title>
+	<link href="{% static 'user/css/bootstrap.css' %}" rel="stylesheet" type="text/css" media="all" />
+	<!-- jQuery(necessary for Bootstrap's JavaScript plugins) -->
+	<script src="{% static 'user/js/jquery-1.11.0.min.js' %}"></script>
+	<!--Custom-Theme-files-->
+	<!--theme-style-->
+	<link href='//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700' rel='stylesheet' type='text/css'>
+	<link href='//fonts.googleapis.com/css?family=Dorsa' rel='stylesheet' type='text/css'>
+	<script type="text/javascript" src="{% static 'user/js/jquery-1.11.1.min.js' %}"></script>
+
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<!-- ### -->
+	<link href="{% static 'user/css/style.css' %}" rel="stylesheet" type="text/css" media="all" />
+
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<link rel="shortcut icon" href="#">
+
+
+	<link href="{% static 'user/css/custom.css' %}" rel="stylesheet" type="text/css" media="all" />
+
+	<!--//theme-style-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="Luxury Watches Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+	<script
+		type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+	<!--start-menu-->
+	<script src="{% static 'user/js/simpleCart.min.js' %}"> </script>
+	<link href="{% static 'user/css/memenu.css' %}" rel="stylesheet" type="text/css" media="all" />
+	<script type="text/javascript" src="{% static 'user/js/memenu.js' %}"></script>
+	<!-- <script>$(document).ready(function () { $(".memenu").memenu(); });</script> -->
+	<!--dropdown-->
+	<script src="{% static 'user/js/jquery.easydropdown.js' %}"></script>
+
+
+
+</head>
+
+<body>
+	<div class="col-md-12" style="background-color: black; max-width: 100%;">
+		<div class="col-md-5">
+			<ul class="nav nav-pills"
+				style="background-color: black; color: white;  padding-left: 3%; padding-top: 3%;">
+				{% if user.is_authenticated %}
+				<li role="presentation" style="display: flex; justify-content: end;" class="dropdown1">
+					<div style=" padding: 2%;">
+						<a class="dropbtn1" style="color: white;"><img src="{% static 'adm/vendors/images/user.png' %}"
+								width="7%" style="border-radius: 50%; box-shadow: 0px 0px 11px white;" alt=""><b
+								style="margin-left: 3%;">HI {{ user.username }}</b></a>
+						<div class="dropdown-content1">
+							<a href="{% url 'profile' %}">Profile</a>
+							<a href="{% url 'logout' %}" onclick="user_logout(event)">Log Out</a>
+							{% if user.is_superuser %}
+							<a href="#" onclick="admin_login(event)">Dashboard</a>
+							{% endif %}
+						</div>
+					</div>
+				</li>
+				{% else %}
+				<li role="presentation"><a href="{% url 'login' %}" style="color: white;"><b>Login</b></a></li>
+				<li role="presentation"><a href="{% url 'reg' %}" style="color: white;"><b>Register</b></a></li>
+
+				{% endif %}
+
+			</ul>
+		</div>
+		<div class="col-md-2">
+			<span class="text-center"
+				style="color: white; font-size: 45px; display: flex; justify-content: center;">[###]</span>
+		</div>
+		<div class="col-md-5">
+			<ul class="nav nav-pills text-center"
+				style="background-color: black; color: white; display: flex; justify-content: end; padding-right: 3%; padding-top: 3%;">
+				<li role="presentation" style="display: flex; justify-content: start;"><a href="{% url 'cart' %}"
+						style="color: rgb(0, 0, 0); padding-left: 3%;"><b
+							style="color: rgb(119, 119, 119);">Cart({{cart_count}})</b></a></li>
+			</ul>
+		</div>
+	</div>
+	<!--top-header-->
+
+	<!--start-logo-->
+	<div class="logo">
+		<a href="{% url 'hom' %}">
+			<h1>Triple Hash</h1>
+		</a>
+
+	</div>
+	<!--start-logo-->
+	<!--bottom-header-->
+	<div class="header-bottom">
+		<div class="container">
+			<div class="header">
+				<div class="col-md-9 header-left" style="display: flex; justify-content: flex-start;">
+					<div class="top-nav">
+						<ul class="memenu">
+							<li class="active"><a href="{% url 'hom' %}"><b> Home</b></a></li>
+							<li><a href="{% url 'men' %}">Men</a>
+							</li>
+							<li><a href="{% url 'women' %}">Women</a>
+
+							</li>
+							<li class="grid"><a href="{% url 'products' %}">New Models</a>
+							</li>
+							<li class="grid"><a href="{% url 'wish_list' %}">Wish List</a>
+							</li>
+						</ul>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<div class="col-md-3 header-right">
+					<form action="{% url 'search' %}" method="get">
+						<div class="search-bar">
+							<input type="text" name="q" placeholder="Search">
+							<input type="submit" value="">
+						</div>
+					</form>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+	<!--bottom-header-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script>
+		function admin_login(event) {
+
+			event.preventDefault();
+			console.log(event.target.href);
+			var link = event.target.href;
+			Swal.fire
+				({
+					width: "70rem",
+					heightAuto: false,
+					title: 'Confirm Your Identity',
+					html: `<input type="email" id="login" class="swal2-input" style="width:80%" placeholder="Email">
+				<input type="password" id="password" class="swal2-input" style="width:80%" placeholder="Password">`,
+					confirmButtonText: 'Sign in',
+					focusConfirm: false,
+					preConfirm: () => {
+						const login = Swal.getPopup().querySelector('#login').value
+						const password = Swal.getPopup().querySelector('#password').value
+						console.log(login)
+						if (!login || !password) {
+							Swal.showValidationMessage(`Please enter email and password`)
+						}
+					}
+
+
+				}).then((willDelete) => {
+					if (willDelete) {
+						const login = Swal.getPopup().querySelector('#login').value
+						const password = Swal.getPopup().querySelector('#password').value
+						$.ajax({
+							url: '/panel/admin_login',
+							method: 'POST',
+							dataType: 'json',
+							data: {
+								login: login,
+								password: password,
+								csrfmiddlewaretoken: "{{csrf_token}}"
+							},
+							success: (response) => {
+								if (response.success == true) {
+									window.location = 'panel/'
+								}
+								else {
+									swal.fire({
+										title: "Failed !",
+										text: "Invalid credentials",
+										icon: "warning",
+										buttons: true,
+										dangerMode: true,
+									})
+								}
+							}
+
+
+						})
+					}
+				})
+		}
+	</script>
+	
+	<script>
+		function user_logout(event){
+			event.preventDefault();
+			console.log(event.target.href);
+			var link=event.target.href;
+			
+			swal({
+				title: "Are you sure? {{user.username}}",
+				text: "Do you want to logout",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+				})
+				.then((willDelete) => {
+				if (willDelete) {
+					window.location = link;
+				} else {
+				}
+			});
+		}
+		
+	</script>
+	{% block content %}
+
+	{% endblock %}
